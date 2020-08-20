@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo xmlns:text-align="http://www.w3.org/1999/xhtml">
+    <data>
+
+<!--Fomulário-->
+        <record id="customfrota_form_view" model="ir.ui.view">
+            <field name="name">Locação</field>
+            <field name="model">custom.frota</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                    <header>
+                        <field name="status" widget="statusbar"/>
+                        <button name="botao_ativar"
+                                    string="Ativar"
+                                    type="object"
+                                    class="btn-primary"
+                                    attrs="{'invisible': [('status','!=', 'inativo')]}"
+                            />
+                            <button name="botao_desativar"
+                                    string="Desativar"
+                                    type="object"
+                                    class="btn-primary"
+                                    attrs="{'invisible': [('status','!=', 'ativo')]}"
+                            />
+                    </header>
+                        <widget name="web_ribbon" text="Ativo" bg_color="bg-success" attrs="{'invisible': [('status', '!=', 'ativo')]}"/>
+                        <widget name="web_ribbon" text="Inativo" bg_color="bg-danger" attrs="{'invisible': [('status', '!=', 'inativo')]}"/>
+                        <separator string="Frota" colspan="4"/>
+                        <hr></hr>
+                        <group>
+                            <group>
+                                <field name="nome" readonly="1"/>
+                                <field name="condutor_atual"/>
+                                <field name="cidade_retirada"/>
+                                <field name="agencia_retirada"/>
+                                <field name="setor"/>
+
+
+                            </group>
+                            <group>
+
+                                <field name="km_utilizado_contrato"/>
+                                <field name="km_inicial"/>
+                                <field name="km_inicial_mes"/>
+                                <field name="km_atual"/>
+                                <field name="uso_km"/>
+                                <field name="revisao"/>
+                                <field name="km_restante_revisao"/>
+                            </group>
+                        </group>
+
+                        <separator string="Carro" colspan="4"/>
+                        <hr></hr>
+                        <group>
+                            <field name="relacao_carro"/>
+                        </group>
+
+                        <separator string="Contrato" colspan="4"/>
+                        <hr></hr>
+                        <group>
+                            <field name="relacao_contrato"/>
+                        </group>
+
+                        <separator string="Gastos" colspan="4"/>
+                        <hr></hr>
+                        <group>
+                            <field name="gastos"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+<!--Tree-->
+         <record id="custom_frota_tree" model="ir.ui.view">
+        <field name="name">Lista de Locação</field>
+        <field name="model">custom.frota</field>
+        <field name="arch" type="xml">
+            <tree multi_edit="1" decoration-success="status == 'ativo'" decoration-danger="status == 'inativo'">
+                <field name="nome" string = "Frota"/>
+                <field name="relacao_carro" string="Carro"/>
+                <field name="relacao_contrato" string = "Contrato"/>
+                <field name="status"/>
+                <field name="condutor_atual" optional="hide"/>
+                <field name="cidade_retirada" optional="hide"/>
+                <field name="agencia_retirada" optional="hide"/>
+<!--                <field name="limite_contrato" optional="hide"/>-->
+                <field name="km_utilizado_contrato" optional="hide"/>
+                <field name="km_inicial" optional="hide"/>
+                <field name="km_inicial_mes" optional="hide"/>
+                <field name="km_atual" optional="hide"/>
+                <field name="uso_km" optional="hide"/>
+                <field name="revisao" optional="hide"/>
+            </tree>
+        </field>
+    </record>
+<!--Action-->
+        <record id="custom_frota_action" model="ir.actions.act_window">
+            <field name="name">Locação</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">custom.frota</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem id="custom_frota_menu" name="Frota" sequence="10" action="custom_frota_action"/>
+        <menuitem id="custom_inicio" name="Início" sequence="10" parent="custom_frota_menu" action="custom_frota_action"/>
+        <menuitem id="custom_cadastros" name="Cadastros" sequence="10" parent="custom_frota_menu" action="custom_frota_action"/>
+    </data>
+</odoo>

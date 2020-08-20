@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+<!--Fomulário-->
+        <record id="custom_frota_carro_form_view" model="ir.ui.view">
+            <field name="name">Carro</field>
+            <field name="model">custom.frota.carro</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <separator string="Carro" colspan="4"/>
+                        <hr></hr>
+                        <group>
+                                <group>
+
+                                </group>
+                            <group>
+
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+<!--Tree-->
+         <record id="custom_frota_carro_tree" model="ir.ui.view">
+        <field name="name">Carro</field>
+        <field name="model">custom.frota.carro</field>
+        <field name="arch" type="xml">
+            <tree>
+
+            </tree>
+        </field>
+    </record>
+<!--Action-->
+        <record id="custom_frota_carro_action" model="ir.actions.act_window">
+            <field name="name">Carro</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">custom.frota.carro</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+    <menuitem id="custom_frota_carro_menu" name="Carro" sequence="10" parent="custom_cadastros" action="custom_frota_carro_action"/>
+    </data>
+</odoo>

@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_custom_frota,Acces For Frota,model_custom_frota,,1,1,1,1
+access_custom_frota_carro,Acces For Carro,model_custom_frota_carro,,1,1,1,1
+access_custom_frota_contrato,Acces For Contrato,model_custom_frota_contrato,,1,1,1,1
+access_custom_frota_condutor,Acces For Condutor,model_custom_frota_condutor,,1,1,1,1
+access_custom_frota_gastos,Acces For Gastos,model_custom_frota_gastos,,1,1,1,1
+access_custom_frota_departamento,Acces For Departamento,model_custom_frota_departamento,,1,1,1,1

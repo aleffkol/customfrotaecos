@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+<!--Fomulário-->
+        <record id="custom_frota_contrato_form_view" model="ir.ui.view">
+            <field name="name">Contrato</field>
+            <field name="model">custom.frota.contrato</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <header>
+                            <field name="status" widget="statusbar"/>
+                        </header>
+                        <widget name="web_ribbon" text="Criado" bg_color="bg-success" attrs="{'invisible': [('status', '!=', 'criado')]}"/>
+                        <widget name="web_ribbon" text="Em andamento" bg_color="bg-warning" attrs="{'invisible': [('status', '!=', 'andamento')]}"/>
+                        <widget name="web_ribbon" text="Finalizado" bg_color="bg-danger" attrs="{'invisible': [('status', '!=', 'finalizado')]}"/>
+                        <separator string="Contrato" colspan="4"/>
+                        <hr></hr>
+                        <group>
+                            <group>
+                                <field name="contrato" required="1"/>
+                                <field name="locadora" required="1"/>
+                                <field name="valor" required="1"/>
+                                <field name="responsavel_retirada" required="1"/>
+                            </group>
+                            <group>
+                                <field name="data_contrato" required="1"/>
+                                <field name="limite_contrato" required="1"/>
+                                <field name="link_contrato" widget="url"/>
+                            </group>
+                        </group>
+<!--                        attrs="{'invisible': [('status', 'not in' , ['step_two', 'finalizada'])]}">-->
+                        <separator string="Frotas" colspan="4"/>
+                        <hr></hr>
+                        <group>
+                            <field name="relacao_frota" attrs="{'invisible': [('status', 'not in' , ['andamento','finalizado'])]}"/>
+                        </group>
+                        <footer>
+                            <button name="botao_finalizar"
+                                    string="Finalizar"
+                                    type="object"
+                                    class="btn-primary"
+                                    attrs="{'invisible': [('status','!=', 'andamento')]}"
+                                    confirm="Você tem certeza que deseja finalizar o contrato?"
+                            />
+                        </footer>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+<!--Tree-->
+         <record id="custom_frota_contrato_tree" model="ir.ui.view">
+        <field name="name">Contrato</field>
+        <field name="model">custom.frota.contrato</field>
+        <field name="arch" type="xml">
+            <tree multi_edit="1" decoration-success="status == 'andamento'" decoration-danger="status == 'finalizado'">
+                <field name="contrato"/>
+                <field name="valor"/>
+                <field name="status"/>
+                <field name="responsavel_retirada" optional="hide"/>
+                <field name="locadora" optional="hide"/>
+                <field name="data_contrato" optional="hide"/>
+                <field name="limite_contrato" optional="hide"/>
+                <field name="link_contrato" optional="hide" widget="url"/>
+            </tree>
+        </field>
+    </record>
+<!--Action-->
+        <record id="custom_frota_contrato_action" model="ir.actions.act_window">
+            <field name="name">Contrato</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">custom.frota.contrato</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+    <menuitem id="custom_frota_contrato_menu" name="Contrato" sequence="10" parent="custom_cadastros" action="custom_frota_contrato_action"/>
+    </data>
+</odoo>

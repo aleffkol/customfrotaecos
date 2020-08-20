@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+<!--Fomulário-->
+        <record id="custom_frota_gastos_form_view" model="ir.ui.view">
+            <field name="name">Gastos</field>
+            <field name="model">custom.frota.gastos</field>
+            <field name="arch" type="xml">
+<!--                 tipo = fields.Selection([('multa', 'Multa'),('sinistro','Sinistro'),('abastecimento','Abastecimento'),('locacao','Locação')])-->
+
+<!--                #Elementos de Multa/Sinistro/Locação-->
+<!--                contrato = fields.Many2one('custom.frota.contrato', string='Contrato', related='frota')-->
+<!--                ocorrencia = fields.Date(string='Ocorrência')-->
+<!--                emissao = fields.Date(string='Emissão')-->
+<!--                baixa = fields.Date(string='Baixa')-->
+<!--                condutor = fields.Many2one('custom.frota.condutor', string='Condutor')-->
+<!--                frota = fields.Many2one('custom.frota', string = 'Frota')-->
+<!--                valor_contrato = fields.Float(string='Valor do contrato')-->
+<!--                link_fatura = fields.Char(string='Link da fatura')-->
+<!--                observacao = fields.Char(string = 'Observação')-->
+<!--            -->
+<!--                #Elementos únicos de Multa/Sinistro-->
+<!--                valor_fatura = fields.Float(string='Valor da fatura')-->
+<!--                valor_sinistro = fields.Float(string='Valor do sinistro')-->
+<!--                situacao = fields.Selection([('aprovado','Aprovado'),('reprovado','Reprovado'),('analise','Aguardando análise'),('paga','Paga')],string='Situação de Aprovação')-->
+<!--                data_envio = fields.Date(string='Data de envio de custo')-->
+<!--                data_analise = fields.Date(string='Data de análise')-->
+<!--                situacao_pagamento = fields.Selection([('paga','Paga'),('vencida','Vencida'),('cancelada','Cancelada'),('aberta','Aberta')], string='Situação de Pagamento')-->
+<!--                descontado_funcionario = fields.Selection([('sim','Sim'),('nao','Não'),('analise','Aguardando Análise'),('cancelada','Cancelada')],string='Descontado valor funcionário')-->
+<!--                valor_desconto_funcionario = fields.Float(string='Valor descontado do funcionário')-->
+<!--            -->
+<!--                #Elementos únicos de abastecimento-->
+<!--                #frota-->
+<!--                #Contrato-->
+<!--                km_mes = fields.Date('Data KM/MÊS')-->
+<!--                valor_km_mes = fields.Float('Valor KM/MÊS')-->
+                <form>
+                    <sheet>
+
+                        <widget name="web_ribbon" text="Multa" bg_color="bg-danger" attrs="{'invisible': [('tipo', '!=', 'multa')]}"/>
+                        <widget name="web_ribbon" text="Sinistro" bg_color="bg-dark" attrs="{'invisible': [('tipo', '!=', 'sinistro')]}"/>
+                        <widget name="web_ribbon" text="Abastecimento" bg_color="bg-success" attrs="{'invisible': [('tipo', '!=', 'abastecimento')]}"/>
+                        <widget name="web_ribbon" text="Locação" bg_color="bg-warning" attrs="{'invisible': [('tipo', '!=', 'locacao')]}"/>
+                        <widget name="web_ribbon" text="Outro" bg_color="bg-primary" attrs="{'invisible': [('tipo', '!=', 'outro')]}"/>
+
+                        <separator string="Escolha um tipo de gasto"/>
+                        <hr></hr>
+                        <field name="tipo" widget="radio" required='1'/>
+
+                        <separator string="Informações Principais" colspan="4" attrs="{'invisible': [('tipo', 'not in', ['multa','sinistro','locacao','abastecimento','outro'])]}"/>
+<!--                        <field name="tipo"/>-->
+
+                        <hr attrs="{'invisible': [('tipo', 'not in', ['multa','sinistro','locacao','abastecimento'])]}"></hr>
+
+                        <group attrs="{'invisible': [('tipo', 'not in', ['multa','sinistro','locacao'])]}">
+                            <group>
+                                <field name="frota"/>
+                                <field name="contrato"/>
+                                <field name="ocorrencia" attrs="{'invisible': [('tipo', 'not in', ['multa','sinistro'])]}"/>
+                                <field name="emissao"/>
+                                <field name="vencimento"/>
+                                <field name="baixa"/>
+                            </group>
+                            <group>
+                                <field name="condutor" string="Usuário"/>
+<!--                                <field name="valor_contrato"/>-->
+                                <field name="link_fatura"/>
+                                <field name="observacao"/>
+                                <field name="valor_locacao" attrs="{'invisible': [('tipo', '!=', 'locacao')]}"/>
+
+                            </group>
+                        </group>
+
+                        <separator string="Informações sobre a multa/sinistro" colspan="4" attrs="{'invisible': [('tipo', 'not in', ['multa','sinistro'])]}"/>
+                        <hr attrs="{'invisible': [('tipo', 'not in', ['multa','sinistro'])]}"></hr>
+                        <group attrs="{'invisible': [('tipo', 'not in', ['multa','sinistro'])]}">
+                            <group>
+                                <field name="valor_fatura"/>
+                                <field name="valor_sinistro"/>
+                                <field name="situacao"/>
+                                <field name="data_envio"/>
+                            </group>
+                            <group>
+                                <field name="data_analise"/>
+                                <field name="situacao_pagamento"/>
+                                <field name="descontado_funcionario"/>
+                                <field name="valor_desconto_funcionario" attrs="{'invisible': [('descontado_funcionario', '!=', 'sim')]}"/>
+                            </group>
+                        </group>
+                        <group attrs="{'invisible': [('tipo', '!=', 'abastecimento')]}">
+                            <group>
+                                <field name="frota"/>
+                                <field name="contrato"/>
+                            </group>
+                            <group>
+                                <field name="km_mes"/>
+                                <field name="valor_km_mes"/>
+                            </group>
+                        </group>
+
+                        <group attrs="{'invisible': [('tipo', '!=', 'outro')]}">
+                            <group>
+                                <field name="frota"/>
+                                <field name="contrato"/>
+                                <field name="valor_outro"/>
+                            </group>
+                            <group>
+                                <field name="emissao"/>
+                                <field name="baixa"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+<!--Tree-->
+         <record id="custom_frota_gastos_tree" model="ir.ui.view">
+        <field name="name">Gastos</field>
+        <field name="model">custom.frota.gastos</field>
+        <field name="arch" type="xml">
+            <tree multi_edit="1" decoration-success="tipo == 'abastecimento'" decoration-danger="tipo == 'multa'" decoration-warning="tipo == 'locacao'" decoration-muted="tipo == 'multa'" decoration-primary="tipo=='outro'">
+                <field name="nome"/>
+                <field name="frota"/>
+                <field name="contrato"/>
+                <field name="tipo"/>
+                <field name="ocorrencia" optional="hide"/>
+                <field name="emissao" optional="hide"/>
+                <field name="vencimento" optional="hide"/>
+                <field name="baixa" optional="hide"/>
+                <field name="condutor" optional="hide"/>
+                <field name="link_fatura" optional="hide"/>
+                <field name="observacao" optional="hide"/>
+                <field name="valor_fatura" optional="hide"/>
+                <field name="valor_sinistro" optional="hide"/>
+                <field name="situacao" optional="hide"/>
+                <field name="data_envio" optional="hide"/>
+                <field name="data_analise" optional="hide"/>
+                <field name="situacao_pagamento" optional="hide"/>
+                <field name="descontado_funcionario" optional="hide"/>
+                <field name="valor_desconto_funcionario" optional="hide"/>
+                <field name="km_mes" optional="hide"/>
+                <field name="valor_km_mes" optional="hide"/>
+<!--                <field name="contrato.valor"/>-->
+
+            </tree>
+        </field>
+    </record>
+<!--Action-->
+        <record id="custom_frota_gastos_action" model="ir.actions.act_window">
+            <field name="name">Gastos</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">custom.frota.gastos</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+    <menuitem id="custom_frota_gastos_menu" name="Gastos" sequence="10" parent="custom_cadastros" action="custom_frota_gastos_action"/>
+<!--    <menuitem id="custom_frota_gastos_menu" name="Gastos" sequence="10" action="custom_frota_gastos_action"/>-->
+    </data>
+</odoo>
