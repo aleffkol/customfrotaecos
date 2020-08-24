@@ -12,7 +12,15 @@ class Frota(models.Model):
     status = fields.Selection([('ativo','Ativo'),('inativo','Inativo')],'Status')
     condutor_atual = fields.Many2one('custom.frota.condutor','Condutor atual')
     relacao_contrato = fields.Many2one('custom.frota.contrato','Selecione o contrato')
+    locadora_contrato= fields.Char('Locadora', related='relacao_contrato.locadora')
+    valor_contrato= fields.Float('Valor do contrato',related='relacao_contrato.valor')
+    responsavel_contrato= fields.Char('Responsável pela retirada',related='relacao_contrato.responsavel_nome')
+    data_contrato= fields.Date('Data do contrato',related='relacao_contrato.data_contrato')
+    limite_contrato = fields.Integer('Limite contrato', related='relacao_contrato.limite_contrato')
+    link_contrato = fields.Char('Link do contrato', related='relacao_contrato.link_contrato')
     relacao_carro = fields.Many2one('custom.frota.carro', 'Selecione o carro')
+    modelo = fields.Char('Modelo', related='relacao_carro.modelo')
+    categoria = fields.Char('Categoria', related = 'relacao_carro.categoria')
     cidade_retirada = fields.Char('Cidade de retirada')
     agencia_retirada = fields.Char('Agência de retirada')
     setor = fields.Char('Setor')
@@ -69,6 +77,7 @@ class Contrato(models.Model):
 
     status = fields.Selection([('criado','Criado'),('andamento','Em Andamento'),('finalizado','Finalizado')],'Status',default='criado')
     responsavel_retirada = fields.Many2one('custom.frota.condutor', 'Responsável pela retirada')
+    responsavel_nome = fields.Char('Responsável', related='responsavel_retirada.nome')
     valor = fields.Float(string='Valor do contrato')
     contrato = fields.Char(string='Nome do contrato')
     limite_contrato = fields.Integer(string = 'Limite contrato')
@@ -114,8 +123,8 @@ class Carro(models.Model):
     def name_get(self):  # ok
         result = []
         for record in self:
-            result.append((record.id, ("%s, %s, %s") % (
-                record.modelo, record.categoria, record.placa)))
+            result.append((record.id, ("%s") % (
+                record.placa)))
         return result
 
 class Condutor(models.Model):

@@ -54,6 +54,8 @@
                         <hr></hr>
                         <group>
                             <field name="relacao_carro"/>
+                            <field name="modelo"/>
+                            <field name="categoria"/>
                         </group>
 
                         <separator string="Contrato" colspan="4"/>
@@ -79,8 +81,16 @@
         <field name="arch" type="xml">
             <tree multi_edit="1" decoration-success="status == 'ativo'" decoration-danger="status == 'inativo'">
                 <field name="nome" string = "Frota"/>
-                <field name="relacao_carro" string="Carro"/>
+                <field name="relacao_carro" string="Placa"/>
+                <field name="modelo" optional="hide"/>
+                <field name="categoria" optional="hide"/>
                 <field name="relacao_contrato" string = "Contrato"/>
+                <field name="responsavel_contrato" string = "Responsável Pela Retirada" optional="hide"/>
+                <field name="locadora_contrato" optional="hide"/>
+                <field name="valor_contrato" optional="hide"/>
+                <field name="data_contrato" optional="hide"/>
+                <field name="limite_contrato" optional="hide"/>
+                <field name="link_contrato" widget="url"  optional="hide"/>
                 <field name="status"/>
                 <field name="condutor_atual" optional="hide"/>
                 <field name="cidade_retirada" optional="hide"/>

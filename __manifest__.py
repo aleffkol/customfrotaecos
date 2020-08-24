@@ -25,10 +25,10 @@
     # always loaded
     'data': [
         'security/ir.model.access.csv',
+        'views/frota.xml',
         'views/views.xml',
         'views/templates.xml',
         'views/carro.xml',
-        'views/frota.xml',
         'views/contrato.xml',
         'views/frota_sequence.xml',
         'views/contrato_sequence.xml',
