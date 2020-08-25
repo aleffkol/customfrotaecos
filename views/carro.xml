@@ -16,6 +16,7 @@
                                     <field name="modelo"/>
                                     <field name="placa"/>
                                     <field name="categoria"/>
+                                    <field name="link_trajeto" widget="url"/>
                                 </group>
                             <group>
 
@@ -35,6 +36,7 @@
                 <field name="modelo"/>
                 <field name="placa"/>
                 <field name="categoria"/>
+                <field name="link_trajeto" widget="url"/>
             </tree>
         </field>
     </record>

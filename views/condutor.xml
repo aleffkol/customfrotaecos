@@ -17,6 +17,7 @@
                                 <field name="cpf"/>
                                 <field name="data_nascimento"/>
                                 <field name="situacao"/>
+                                <field name="contato" widget="mask" data-input-mask="(99)9 9999-9999"/>
                             </group>
                             <group>
                                 <field name="link_cnh" widget="url"/>

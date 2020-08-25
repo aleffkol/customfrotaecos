@@ -35,8 +35,7 @@
                                 <field name="cidade_retirada"/>
                                 <field name="agencia_retirada"/>
                                 <field name="setor"/>
-
-
+                                <field name="link_trajeto" widget="url"/>
                             </group>
                             <group>
 
@@ -80,6 +79,7 @@
         <field name="model">custom.frota</field>
         <field name="arch" type="xml">
             <tree multi_edit="1" decoration-success="status == 'ativo'" decoration-danger="status == 'inativo'">
+<!--            <tree>-->
                 <field name="nome" string = "Frota"/>
                 <field name="relacao_carro" string="Placa"/>
                 <field name="modelo" optional="hide"/>
@@ -89,10 +89,14 @@
                 <field name="locadora_contrato" optional="hide"/>
                 <field name="valor_contrato" optional="hide"/>
                 <field name="data_contrato" optional="hide"/>
-                <field name="limite_contrato" optional="hide"/>
+                <field name="limite_contrato"/>
                 <field name="link_contrato" widget="url"  optional="hide"/>
                 <field name="status"/>
+                <field name="link_trajeto" widget="url" optional="hide"/>
+<!--                <field name="status" attrs="{'invisible': [('status','!=', 'inativo')]}" style="background-color:red;" />-->
+<!--                <field name="status" attrs="{'invisible': [('status','!=', 'ativo')]}" style="background-color:green;" />-->
                 <field name="condutor_atual" optional="hide"/>
+                <field name="contato_condutor" optional="hide"/>
                 <field name="cidade_retirada" optional="hide"/>
                 <field name="agencia_retirada" optional="hide"/>
 <!--                <field name="limite_contrato" optional="hide"/>-->

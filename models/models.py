@@ -11,10 +11,12 @@ class Frota(models.Model):
     nome = fields.Char(string='Nome')
     status = fields.Selection([('ativo','Ativo'),('inativo','Inativo')],'Status')
     condutor_atual = fields.Many2one('custom.frota.condutor','Condutor atual')
+    contato_condutor = fields.Char('Contato Condutor', related="condutor_atual.contato")
     relacao_contrato = fields.Many2one('custom.frota.contrato','Selecione o contrato')
     locadora_contrato= fields.Char('Locadora', related='relacao_contrato.locadora')
     valor_contrato= fields.Float('Valor do contrato',related='relacao_contrato.valor')
     responsavel_contrato= fields.Char('Responsável pela retirada',related='relacao_contrato.responsavel_nome')
+    # responsavel_contato = fields.Char('Contato do Responsável', related="responsavel_contrato.responsavel_contato")
     data_contrato= fields.Date('Data do contrato',related='relacao_contrato.data_contrato')
     limite_contrato = fields.Integer('Limite contrato', related='relacao_contrato.limite_contrato')
     link_contrato = fields.Char('Link do contrato', related='relacao_contrato.link_contrato')
@@ -33,6 +35,7 @@ class Frota(models.Model):
     uso_km = fields.Integer('Uso KM', compute='get_uso_km')
     revisao = fields.Integer('Revisao')
     km_restante_revisao = fields.Integer('KM restante para revisão', compute='get_km_revisao')
+    link_trajeto = fields.Char('Link do trajeto', widget='url', related="relacao_carro.link_trajeto")
 
     def get_uso_km(self):
         # self.ensure_one()
@@ -78,6 +81,7 @@ class Contrato(models.Model):
     status = fields.Selection([('criado','Criado'),('andamento','Em Andamento'),('finalizado','Finalizado')],'Status',default='criado')
     responsavel_retirada = fields.Many2one('custom.frota.condutor', 'Responsável pela retirada')
     responsavel_nome = fields.Char('Responsável', related='responsavel_retirada.nome')
+    responsavel_contato = fields.Char('Contato do Responsável', related="responsavel_retirada.contato")
     valor = fields.Float(string='Valor do contrato')
     contrato = fields.Char(string='Nome do contrato')
     limite_contrato = fields.Integer(string = 'Limite contrato')
@@ -119,7 +123,7 @@ class Carro(models.Model):
     modelo = fields.Char(string='Modelo')
     categoria = fields.Char(string='Categoria')
     placa = fields.Char(string = 'Placa', min=7, max=7, size=7)
-
+    link_trajeto = fields.Char('Link trajeto')
     def name_get(self):  # ok
         result = []
         for record in self:
@@ -139,7 +143,7 @@ class Condutor(models.Model):
     vencimento_cnh = fields.Char('Vencimento CNH', compute='get_vencimento')
     link_cnh = fields.Char('Link CNH')
     situacao = fields.Selection([('ativo','Ativo'), ('demitido', 'Demitido')], 'Situação',default='ativo', required='1')
-
+    contato = fields.Char('Contato')
     def get_vencimento(self):
         hoje = datetime.now().date()
         for record in self:

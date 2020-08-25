@@ -23,6 +23,7 @@
                                 <field name="locadora" required="1"/>
                                 <field name="valor" required="1"/>
                                 <field name="responsavel_retirada" required="1"/>
+                                <field name="responsavel_contato"/>
                             </group>
                             <group>
                                 <field name="data_contrato" required="1"/>
@@ -60,6 +61,7 @@
                 <field name="valor"/>
                 <field name="status"/>
                 <field name="responsavel_retirada" optional="hide"/>
+                <field name="responsavel_contato" optional="hide"/>
                 <field name="locadora" optional="hide"/>
                 <field name="data_contrato" optional="hide"/>
                 <field name="limite_contrato" optional="hide"/>
